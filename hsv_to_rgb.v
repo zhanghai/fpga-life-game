@@ -10,33 +10,21 @@ module hsv_to_rgb(
 	output [1:0] b
 	);
 
-	wire [2:0] c;
-	wire [2:0] h_;
-	wire [1:0] _temp1;
-	wire [1:0] _temp2;
-	wire x;
-	wire r_;
-	wire g_;
-	wire b_;
-	wire m;
+	wire [2:0] max = v;
+	wire [2:0] _temp = v * s / 7;
+	wire [2:0] min = v - _temp;
+	wire [2:0] mid = v - _temp / 2;
+	wire [2:0] b_;
 
-	assign c = (v + 1) * (s + 1) / 8 - 1;
-	assign h_ = h / 2;
-	assign _temp1 = h_ % 4;
-	assign _temp2 = _temp1 >= 2 ? _temp1 - 2 : 2 - _temp1;
-	assign x = c * (2 - _temp2) / 2;
-	assign r_ = h_ == 0 || h_ == 5 ? c :
-			h_ == 1 || h_ == 4 ? x :
-			0;
-	assign g_ = h_ == 1 || h_ == 2 ? c :
-			h_ == 0 || h_ == 3 ? x :
-			0;
-	assign b_ = h_ == 3 || h_ == 4 ? c :
-			h_ == 2 || h_ == 5 ? x :
-			0;
-	assign m = v - c;
-	assign r = r_ + m;
-	assign g = g_ + m;
-	assign b = b_ + m;
+	assign r = h == 0 || h == 1 || h == 2 || h == 10 || h == 11 ? max :
+			h == 3 || h == 9 ? mid :
+			min;
+	assign g = h == 2 || h == 3 || h == 4 || h == 5 || h == 6 ? max :
+			h == 1 || h == 7 ? mid :
+			min;
+	assign b_ = h == 6 || h == 7 || h == 8 || h == 9 || h == 10 ? max :
+			h == 5 || h == 11 ? mid :
+			min;
+	assign b = b_ / 2;
 
 endmodule
