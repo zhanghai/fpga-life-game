@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 
-module clock_divider_to_500ms(
+module clock_divider_to_125ms(
    input clock_100mhz,
-   output reg clock_500ms = 0
+   output reg clock_125ms = 0
    );
 
-	parameter COUNTER_MAX = 25000000;
+	parameter COUNTER_MAX = 6250000;
 
 	reg [25:0] counter = 0;
 
@@ -14,7 +14,7 @@ module clock_divider_to_500ms(
 			counter <= counter + 1;
 		end else begin
 			counter <= 0;
-			clock_500ms <= ~clock_500ms;
+			clock_125ms <= ~clock_125ms;
 		end
 	end
 

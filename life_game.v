@@ -14,8 +14,7 @@ module life_game(
 	parameter BLOCK_COUNT_X = 640 / BLOCK_SIZE;
 	parameter BLOCK_COUNT_Y = 480 / BLOCK_SIZE;
 
-	parameter COLOR_EMPTY = 8'b100_100_10;
-	parameter COLOR_LIFE = 8'b000_111_11;
+	parameter COLOR_EMPTY = 8'b111_111_11;
 
 	reg map_0 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
 	reg map_1 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
@@ -68,6 +67,8 @@ generate
 				end
 			end
 		end
+//		map_0[i][j] <= 1;
+//		map_1[i][j] <= 1;
 	end
 
 		end

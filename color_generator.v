@@ -10,7 +10,7 @@ module color_generator(
 	wire [2:0] s;
 
 	assign h = x_index * 12 / 32;
-	assign s = y_index / 4;
+	assign s = y_index / 6 + 4;
 	
 	hsv_to_rgb hsv_to_rgb(h, s, 3'b111, color[7:5], color[4:2], color[1:0]);
 
