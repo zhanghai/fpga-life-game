@@ -2,6 +2,7 @@
 
 module life_game(
 	input clock,
+	input run,
 	input [3:0] button,
 	input [9:0] x_position,
 	input [8:0] y_position,
@@ -24,6 +25,7 @@ module life_game(
 	wire [4:0] x_index;
 	wire [4:0] y_index;
 	wire block_current;
+	wire [7:0] color_life;
 
 	initial begin
 		map_0[1][0] = 1;
@@ -34,45 +36,52 @@ module life_game(
 	end
 
 	always @(posedge clock) begin
-		map_index <= ~map_index;
+		if (run) begin
+			map_index <= ~map_index;
+		end
 	end
 
-	genvar i, j;
-	generate
-		for (i = 0; i < BLOCK_COUNT_X; i = i + 1) begin
-			for (j = 0; j < BLOCK_COUNT_Y; j = j + 1) begin
-				assign neighbor_count_0[i][j] = map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_0[i][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_0[(i + 1) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y]
-						+ map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j] + map_0[(i + 1) % BLOCK_COUNT_X][j]
-						+ map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y] + map_0[i][(j + 1) % BLOCK_COUNT_Y] + map_0[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y];
-				assign neighbor_count_1[i][j] = map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_1[i][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_1[(i + 1) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y]
-						+ map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j] + map_1[(i + 1) % BLOCK_COUNT_X][j]
-						+ map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y] + map_1[i][(j + 1) % BLOCK_COUNT_Y] + map_1[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y];
-				always @(posedge clock) begin
-					if (map_index == 0) begin
-						if (map_0[i][j]) begin
-							map_1[i][j] <= neighbor_count_0[i][j] == 2 || neighbor_count_0[i][j] == 3;
-						end else begin
-							map_1[i][j] <= neighbor_count_0[i][j] == 3;
-						end
-					end else begin
-						if (map_1[i][j]) begin
-							map_0[i][j] <= neighbor_count_1[i][j] == 2 || neighbor_count_1[i][j] == 3;
-						end else begin
-							map_0[i][j] <= neighbor_count_1[i][j] == 3;
-						end
-					end
+genvar i, j;
+generate
+	for (i = 0; i < BLOCK_COUNT_X; i = i + 1) begin
+		for (j = 0; j < BLOCK_COUNT_Y; j = j + 1) begin
+
+	assign neighbor_count_0[i][j] = map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_0[i][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_0[(i + 1) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y]
+			+ map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j] + map_0[(i + 1) % BLOCK_COUNT_X][j]
+			+ map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y] + map_0[i][(j + 1) % BLOCK_COUNT_Y] + map_0[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y];
+	assign neighbor_count_1[i][j] = map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_1[i][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_1[(i + 1) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y]
+			+ map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j] + map_1[(i + 1) % BLOCK_COUNT_X][j]
+			+ map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y] + map_1[i][(j + 1) % BLOCK_COUNT_Y] + map_1[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y];
+	always @(posedge clock) begin
+		if (run) begin
+			if (map_index == 0) begin
+				if (map_0[i][j]) begin
+					map_1[i][j] <= neighbor_count_0[i][j] == 2 || neighbor_count_0[i][j] == 3;
+				end else begin
+					map_1[i][j] <= neighbor_count_0[i][j] == 3;
+				end
+			end else begin
+				if (map_1[i][j]) begin
+					map_0[i][j] <= neighbor_count_1[i][j] == 2 || neighbor_count_1[i][j] == 3;
+				end else begin
+					map_0[i][j] <= neighbor_count_1[i][j] == 3;
 				end
 			end
 		end
-	endgenerate
+	end
+
+		end
+	end
+endgenerate
 
 	assign x_index = x_position / 5'd20;
 	assign y_index = y_position / 5'd20;
 	assign block_current = map_index == 0 ? map_0[x_index][y_index] : map_1[x_index][y_index];
+	color_generator color_generator(x_index, y_index, color_life);
 
 	always @(*) begin
 		if (inside_video) begin
-			color = block_current ? COLOR_LIFE : COLOR_EMPTY;
+			color = block_current ? color_life : COLOR_EMPTY;
 		end else begin
 			color = 0;
 		end

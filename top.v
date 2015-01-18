@@ -32,7 +32,7 @@ module top(
 
 	vga_controller vga_controller(clock_25mhz, switch[0], vga_h_sync, vga_v_sync, inside_video, x_position, y_position);
 
-	life_game life_game(clock_500ms, button[3:0], x_position, y_position, inside_video, color);
+	life_game life_game(clock_500ms, switch[7], button[3:0], x_position, y_position, inside_video, color);
 	assign vga_r = color[7:5];
 	assign vga_g = color[4:2];
 	assign vga_b = color[1:0];
