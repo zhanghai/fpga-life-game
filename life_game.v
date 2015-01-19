@@ -4,6 +4,10 @@ module life_game(
 	input clock,
 	input run,
 	input [3:0] button,
+	input mouse_clock,
+	input mouse_button,
+	input [8:0] mouse_delta_x,
+	input [8:0] mouse_delta_y,
 	input [9:0] x_position,
 	input [8:0] y_position,
 	input inside_video,
@@ -16,6 +20,10 @@ module life_game(
 
 	parameter COLOR_EMPTY = 8'b111_111_11;
 
+	reg [8:0] mouse_x = 320;
+	reg [8:0] mouse_y = 240;
+	wire mouse_x_index;
+	wire mouse_y_index;
 	reg map_0 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
 	reg map_1 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
 	reg map_index = 0;
@@ -33,6 +41,14 @@ module life_game(
 		map_0[1][2] = 1;
 		map_0[2][2] = 1;
 	end
+
+	always @(posedge mouse_clock) begin
+		mouse_x <= mouse_x + mouse_delta_x;
+		mouse_y <= mouse_y + mouse_delta_y;
+	end
+
+	assign mouse_x_index = mouse_x / 5'd20;
+	assign mouse_y_index = mouse_y / 5'd20;
 
 	always @(posedge clock) begin
 		if (run) begin
@@ -55,15 +71,15 @@ generate
 		if (run) begin
 			if (map_index == 0) begin
 				if (map_0[i][j]) begin
-					map_1[i][j] <= neighbor_count_0[i][j] == 2 || neighbor_count_0[i][j] == 3;
+					map_1[i][j] <= mouse_button || neighbor_count_0[i][j] == 2 || neighbor_count_0[i][j] == 3;
 				end else begin
-					map_1[i][j] <= neighbor_count_0[i][j] == 3;
+					map_1[i][j] <= mouse_button || neighbor_count_0[i][j] == 3;
 				end
 			end else begin
 				if (map_1[i][j]) begin
-					map_0[i][j] <= neighbor_count_1[i][j] == 2 || neighbor_count_1[i][j] == 3;
+					map_0[i][j] <= mouse_button || neighbor_count_1[i][j] == 2 || neighbor_count_1[i][j] == 3;
 				end else begin
-					map_0[i][j] <= neighbor_count_1[i][j] == 3;
+					map_0[i][j] <= mouse_button || neighbor_count_1[i][j] == 3;
 				end
 			end
 		end

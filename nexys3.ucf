@@ -127,8 +127,8 @@ Net "clock" TNM_NET = sys_clk_pin;
 #Net "PS2KeyboardData" LOC = J13| IOSTANDARD = LVCMOS33; #Bank = 1, pin name = IO_L39P_M1A3, Sch name = PIC-SDI1
 #Net "PS2KeyboardClk" LOC = L12 | IOSTANDARD = LVCMOS33; #Bank = 1, pin name = IO_L40P_GCLK11_M1A5, Sch name = PIC-SCK1
 
-#NET "PS2MouseData" LOC = K14 | IOSTANDARD = LVCMOS33; #Bank = 1, pin name = IO_L39N_M1ODT, Sch name = PIC-SDO1
-#NET "PS2MouseClk" LOC = L13| IOSTANDARD = LVCMOS33; #Bank = 1, pin name = IO_L40N_GCLK10_M1A6, Sch name = PIC-SS1
+NET "mouse_data" LOC = K14 | IOSTANDARD = LVCMOS33; #Bank = 1, pin name = IO_L39N_M1ODT, Sch name = PIC-SDO1
+NET "mouse_clock" LOC = L13 | IOSTANDARD = LVCMOS33; #Bank = 1, pin name = IO_L40N_GCLK10_M1A6, Sch name = PIC-SS1
 
 #Net "PicGpio<0>" LOC = L16 | IOSTANDARD = LVCMOS33; #Bank = 1, pin name = IO_L42N_GCLK6_TRDY1_M1LDM, Sch name = PIC-GPIO0
 #NET "PicGpio<1>" LOC = H17 | IOSTANDARD = LVCMOS33; #Bank = 1, pin name = IO_L43P_GCLK5_M1DQ4, Sch name = PIC-GPIO1
