@@ -27,8 +27,10 @@ module life_game(
 	reg map_0 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
 	reg map_1 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
 	reg map_index = 0;
-	wire [3:0] neighbor_count_0 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
-	wire [3:0] neighbor_count_1 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
+	wire neighbor_equals_2_0 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
+	wire neighbor_equals_3_0 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
+	wire neighbor_equals_2_1 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
+	wire neighbor_equals_3_1 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
 	wire [4:0] x_index;
 	wire [4:0] y_index;
 	wire block_current;
@@ -61,25 +63,37 @@ generate
 	for (i = 0; i < BLOCK_COUNT_X; i = i + 1) begin
 		for (j = 0; j < BLOCK_COUNT_Y; j = j + 1) begin
 
-	assign neighbor_count_0[i][j] = map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_0[i][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_0[(i + 1) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y]
-			+ map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j] + map_0[(i + 1) % BLOCK_COUNT_X][j]
-			+ map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y] + map_0[i][(j + 1) % BLOCK_COUNT_Y] + map_0[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y];
-	assign neighbor_count_1[i][j] = map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_1[i][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_1[(i + 1) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y]
-			+ map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j] + map_1[(i + 1) % BLOCK_COUNT_X][j]
-			+ map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y] + map_1[i][(j + 1) % BLOCK_COUNT_Y] + map_1[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y];
+	neighbor_checker_2({map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y], map_0[i][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y], map_0[(i + 1) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y],
+			map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j], map_0[(i + 1) % BLOCK_COUNT_X][j],
+			map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y], map_0[i][(j + 1) % BLOCK_COUNT_Y], map_0[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y]},
+			neighbor_equals_2_0[i][j]);
+	neighbor_checker_3({map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y], map_0[i][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y], map_0[(i + 1) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y],
+			map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j], map_0[(i + 1) % BLOCK_COUNT_X][j],
+			map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y], map_0[i][(j + 1) % BLOCK_COUNT_Y], map_0[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y]},
+			neighbor_equals_3_0[i][j]);
+
+	neighbor_checker_2({map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y], map_1[i][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y], map_1[(i + 1) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y],
+			map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j], map_1[(i + 1) % BLOCK_COUNT_X][j],
+			map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y], map_1[i][(j + 1) % BLOCK_COUNT_Y], map_1[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y]},
+			neighbor_equals_2_1[i][j]);
+	neighbor_checker_3({map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y], map_1[i][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y], map_1[(i + 1) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y],
+			map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j], map_1[(i + 1) % BLOCK_COUNT_X][j],
+			map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y], map_1[i][(j + 1) % BLOCK_COUNT_Y], map_1[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y]},
+			neighbor_equals_3_1[i][j]);
+
 	always @(posedge clock) begin
 		if (run) begin
 			if (map_index == 0) begin
 				if (map_0[i][j]) begin
-					map_1[i][j] <= mouse_button || neighbor_count_0[i][j] == 2 || neighbor_count_0[i][j] == 3;
+					map_1[i][j] <= mouse_button || neighbor_equals_2_0[i][j] || neighbor_equals_3_0[i][j];
 				end else begin
-					map_1[i][j] <= mouse_button || neighbor_count_0[i][j] == 3;
+					map_1[i][j] <= mouse_button || neighbor_equals_3_0[i][j];
 				end
 			end else begin
 				if (map_1[i][j]) begin
-					map_0[i][j] <= mouse_button || neighbor_count_1[i][j] == 2 || neighbor_count_1[i][j] == 3;
+					map_0[i][j] <= mouse_button || neighbor_equals_2_1[i][j] || neighbor_equals_3_1[i][j];
 				end else begin
-					map_0[i][j] <= mouse_button || neighbor_count_1[i][j] == 3;
+					map_0[i][j] <= mouse_button || neighbor_equals_3_1[i][j];
 				end
 			end
 		end
