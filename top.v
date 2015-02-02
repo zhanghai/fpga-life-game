@@ -42,8 +42,8 @@ module top(
 
 	vga_controller vga_controller(clock_25mhz, switch[0], vga_h_sync, vga_v_sync, inside_video, x_position, y_position);
 
-//	button_pointer #(25) (button_left, button_right, button_up, button_down, button_select, pointer_ready, pointer_delta_x, pointer_delta_y, pointer_select);
-	button_pointer #(25) (button_up, button_down, button_left, button_right, button_select, pointer_ready, pointer_delta_x, pointer_delta_y, pointer_select);
+//	button_pointer #(25) button_pointer (button_left, button_right, button_up, button_down, button_select, pointer_ready, pointer_delta_x, pointer_delta_y, pointer_select);
+	button_pointer #(25) button_pointer (button_up, button_down, button_left, button_right, button_select, pointer_ready, pointer_delta_x, pointer_delta_y, pointer_select);
 
 	clock_divider_to_125ms clock_divider_to_125ms(clock, clock_125ms);
 	clock_divider #(1) clock_divider_to_250ms(clock_125ms, clock_250ms);
