@@ -17,7 +17,7 @@
   <files>
     <file xil_pn:name="anti_jitter.v" xil_pn:type="FILE_VERILOG">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="9"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="10"/>
     </file>
     <file xil_pn:name="life_game.v" xil_pn:type="FILE_VERILOG">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
@@ -28,11 +28,11 @@
     </file>
     <file xil_pn:name="top.v" xil_pn:type="FILE_VERILOG">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="10"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="11"/>
     </file>
     <file xil_pn:name="vga_controller.v" xil_pn:type="FILE_VERILOG">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="3"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="4"/>
     </file>
     <file xil_pn:name="life_game_test.v" xil_pn:type="FILE_VERILOG">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
@@ -56,11 +56,11 @@
     </file>
     <file xil_pn:name="multiplexer_4_1.v" xil_pn:type="FILE_VERILOG">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="60"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="4"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="5"/>
     </file>
     <file xil_pn:name="mouse_controller.v" xil_pn:type="FILE_VERILOG">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="63"/>
-      <association xil_pn:name="Implementation" xil_pn:seqID="5"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="0"/>
     </file>
     <file xil_pn:name="clock_divider.v" xil_pn:type="FILE_VERILOG">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="65"/>
@@ -69,6 +69,18 @@
     <file xil_pn:name="clock_divider_to_125ms.v" xil_pn:type="FILE_VERILOG">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="66"/>
       <association xil_pn:name="Implementation" xil_pn:seqID="7"/>
+    </file>
+    <file xil_pn:name="color_circlizer.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="65"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="3"/>
+    </file>
+    <file xil_pn:name="keyboard_controller.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="65"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="0"/>
+    </file>
+    <file xil_pn:name="button_pointer.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="65"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="9"/>
     </file>
   </files>
 
@@ -85,7 +97,7 @@
     <property xil_pn:name="Asynchronous To Synchronous" xil_pn:value="false" xil_pn:valueState="default"/>
     <property xil_pn:name="Auto Implementation Compile Order" xil_pn:value="true" xil_pn:valueState="default"/>
     <property xil_pn:name="Auto Implementation Top" xil_pn:value="true" xil_pn:valueState="default"/>
-    <property xil_pn:name="Automatic BRAM Packing" xil_pn:value="false" xil_pn:valueState="default"/>
+    <property xil_pn:name="Automatic BRAM Packing" xil_pn:value="true" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Automatically Insert glbl Module in the Netlist" xil_pn:value="true" xil_pn:valueState="default"/>
     <property xil_pn:name="Automatically Run Generate Target PROM/ACE File" xil_pn:value="false" xil_pn:valueState="default"/>
     <property xil_pn:name="BRAM Utilization Ratio" xil_pn:value="100" xil_pn:valueState="default"/>
@@ -141,7 +153,7 @@
     <property xil_pn:name="Enable Internal Done Pipe" xil_pn:value="true" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Enable Message Filtering" xil_pn:value="false" xil_pn:valueState="default"/>
     <property xil_pn:name="Enable Multi-Pin Wake-Up Suspend Mode spartan6" xil_pn:value="false" xil_pn:valueState="default"/>
-    <property xil_pn:name="Enable Multi-Threading" xil_pn:value="Off" xil_pn:valueState="default"/>
+    <property xil_pn:name="Enable Multi-Threading" xil_pn:value="2" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Enable Multi-Threading par spartan6" xil_pn:value="Off" xil_pn:valueState="default"/>
     <property xil_pn:name="Enable Outputs (Output Events)" xil_pn:value="Default (5)" xil_pn:valueState="default"/>
     <property xil_pn:name="Enable Suspend/Wake Global Set/Reset spartan6" xil_pn:value="false" xil_pn:valueState="default"/>
@@ -157,7 +169,7 @@
     <property xil_pn:name="Extra Effort (Highest PAR level only)" xil_pn:value="None" xil_pn:valueState="default"/>
     <property xil_pn:name="FPGA Start-Up Clock" xil_pn:value="CCLK" xil_pn:valueState="default"/>
     <property xil_pn:name="FSM Encoding Algorithm" xil_pn:value="Auto" xil_pn:valueState="default"/>
-    <property xil_pn:name="FSM Style" xil_pn:value="LUT" xil_pn:valueState="default"/>
+    <property xil_pn:name="FSM Style" xil_pn:value="Bram" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Filter Files From Compile Order" xil_pn:value="true" xil_pn:valueState="default"/>
     <property xil_pn:name="Flatten Output Netlist" xil_pn:value="false" xil_pn:valueState="default"/>
     <property xil_pn:name="Functional Model Target Language ArchWiz" xil_pn:value="Verilog" xil_pn:valueState="default"/>
@@ -205,8 +217,8 @@
     <property xil_pn:name="JTAG Pin TDO" xil_pn:value="Pull Up" xil_pn:valueState="default"/>
     <property xil_pn:name="JTAG Pin TMS" xil_pn:value="Pull Up" xil_pn:valueState="default"/>
     <property xil_pn:name="Keep Hierarchy" xil_pn:value="No" xil_pn:valueState="default"/>
-    <property xil_pn:name="LUT Combining Map" xil_pn:value="Off" xil_pn:valueState="default"/>
-    <property xil_pn:name="LUT Combining Xst" xil_pn:value="Auto" xil_pn:valueState="default"/>
+    <property xil_pn:name="LUT Combining Map" xil_pn:value="Area" xil_pn:valueState="non-default"/>
+    <property xil_pn:name="LUT Combining Xst" xil_pn:value="Area" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Language" xil_pn:value="VHDL" xil_pn:valueState="default"/>
     <property xil_pn:name="Last Applied Goal" xil_pn:value="Balanced" xil_pn:valueState="default"/>
     <property xil_pn:name="Last Applied Strategy" xil_pn:value="Xilinx Default (unlocked)" xil_pn:valueState="default"/>
@@ -216,7 +228,7 @@
     <property xil_pn:name="Load glbl" xil_pn:value="true" xil_pn:valueState="default"/>
     <property xil_pn:name="Logical Shifter Extraction" xil_pn:value="true" xil_pn:valueState="default"/>
     <property xil_pn:name="Manual Implementation Compile Order" xil_pn:value="false" xil_pn:valueState="default"/>
-    <property xil_pn:name="Map Slice Logic into Unused Block RAMs" xil_pn:value="false" xil_pn:valueState="default"/>
+    <property xil_pn:name="Map Slice Logic into Unused Block RAMs" xil_pn:value="true" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Mask Pins for Multi-Pin Wake-Up Suspend Mode spartan6" xil_pn:value="0x00" xil_pn:valueState="default"/>
     <property xil_pn:name="Max Fanout" xil_pn:value="100000" xil_pn:valueState="default"/>
     <property xil_pn:name="Maximum Compression" xil_pn:value="false" xil_pn:valueState="default"/>
@@ -239,8 +251,8 @@
     <property xil_pn:name="Number of Paths in Error/Verbose Report" xil_pn:value="3" xil_pn:valueState="default"/>
     <property xil_pn:name="Number of Paths in Error/Verbose Report Post Trace" xil_pn:value="3" xil_pn:valueState="default"/>
     <property xil_pn:name="Optimization Effort" xil_pn:value="Normal" xil_pn:valueState="default"/>
-    <property xil_pn:name="Optimization Effort spartan6" xil_pn:value="Normal" xil_pn:valueState="default"/>
-    <property xil_pn:name="Optimization Goal" xil_pn:value="Speed" xil_pn:valueState="default"/>
+    <property xil_pn:name="Optimization Effort spartan6" xil_pn:value="High" xil_pn:valueState="non-default"/>
+    <property xil_pn:name="Optimization Goal" xil_pn:value="Area" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Optimization Strategy (Cover Mode)" xil_pn:value="Area" xil_pn:valueState="default"/>
     <property xil_pn:name="Optimize Instantiated Primitives" xil_pn:value="false" xil_pn:valueState="default"/>
     <property xil_pn:name="Other Bitgen Command Line Options" xil_pn:value="" xil_pn:valueState="default"/>
@@ -274,7 +286,7 @@
     <property xil_pn:name="Place MultiBoot Settings into Bitstream spartan6" xil_pn:value="false" xil_pn:valueState="default"/>
     <property xil_pn:name="Placer Effort Level (Overrides Overall Level)" xil_pn:value="None" xil_pn:valueState="default"/>
     <property xil_pn:name="Placer Effort Level Map" xil_pn:value="High" xil_pn:valueState="default"/>
-    <property xil_pn:name="Placer Extra Effort Map" xil_pn:value="None" xil_pn:valueState="default"/>
+    <property xil_pn:name="Placer Extra Effort Map" xil_pn:value="Normal" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Port to be used" xil_pn:value="Auto - default" xil_pn:valueState="default"/>
     <property xil_pn:name="Post Map Simulation Model Name" xil_pn:value="top_map.v" xil_pn:valueState="default"/>
     <property xil_pn:name="Post Place &amp; Route Simulation Model Name" xil_pn:value="top_timesim.v" xil_pn:valueState="default"/>
@@ -290,9 +302,9 @@
     <property xil_pn:name="Project Description" xil_pn:value="" xil_pn:valueState="default"/>
     <property xil_pn:name="Property Specification in Project File" xil_pn:value="Store all values" xil_pn:valueState="default"/>
     <property xil_pn:name="RAM Extraction" xil_pn:value="true" xil_pn:valueState="default"/>
-    <property xil_pn:name="RAM Style" xil_pn:value="Auto" xil_pn:valueState="default"/>
+    <property xil_pn:name="RAM Style" xil_pn:value="Block" xil_pn:valueState="non-default"/>
     <property xil_pn:name="ROM Extraction" xil_pn:value="true" xil_pn:valueState="default"/>
-    <property xil_pn:name="ROM Style" xil_pn:value="Auto" xil_pn:valueState="default"/>
+    <property xil_pn:name="ROM Style" xil_pn:value="Block" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Read Cores" xil_pn:value="true" xil_pn:valueState="default"/>
     <property xil_pn:name="Reduce Control Sets" xil_pn:value="Auto" xil_pn:valueState="default"/>
     <property xil_pn:name="Regenerate Core" xil_pn:value="Under Current Project Setting" xil_pn:valueState="default"/>
@@ -357,7 +369,7 @@
     <property xil_pn:name="Starting Placer Cost Table (1-100) Par" xil_pn:value="1" xil_pn:valueState="default"/>
     <property xil_pn:name="Synthesis Tool" xil_pn:value="XST (VHDL/Verilog)" xil_pn:valueState="default"/>
     <property xil_pn:name="Target Simulator" xil_pn:value="Please Specify" xil_pn:valueState="default"/>
-    <property xil_pn:name="Timing Mode Map" xil_pn:value="Non Timing Driven" xil_pn:valueState="non-default"/>
+    <property xil_pn:name="Timing Mode Map" xil_pn:value="Performance Evaluation" xil_pn:valueState="default"/>
     <property xil_pn:name="Timing Mode Par" xil_pn:value="Performance Evaluation" xil_pn:valueState="default"/>
     <property xil_pn:name="Top-Level Module Name in Output Netlist" xil_pn:value="" xil_pn:valueState="default"/>
     <property xil_pn:name="Top-Level Source Type" xil_pn:value="HDL" xil_pn:valueState="default"/>
@@ -378,14 +390,14 @@
     <property xil_pn:name="Use Custom Waveform Configuration File Map" xil_pn:value="false" xil_pn:valueState="default"/>
     <property xil_pn:name="Use Custom Waveform Configuration File Par" xil_pn:value="false" xil_pn:valueState="default"/>
     <property xil_pn:name="Use Custom Waveform Configuration File Translate" xil_pn:value="false" xil_pn:valueState="default"/>
-    <property xil_pn:name="Use DSP Block spartan6" xil_pn:value="Auto" xil_pn:valueState="default"/>
+    <property xil_pn:name="Use DSP Block spartan6" xil_pn:value="Automax" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Use LOC Constraints" xil_pn:value="true" xil_pn:valueState="default"/>
     <property xil_pn:name="Use RLOC Constraints" xil_pn:value="Yes" xil_pn:valueState="default"/>
     <property xil_pn:name="Use Smart Guide" xil_pn:value="false" xil_pn:valueState="default"/>
     <property xil_pn:name="Use Synchronous Reset" xil_pn:value="Auto" xil_pn:valueState="default"/>
     <property xil_pn:name="Use Synchronous Set" xil_pn:value="Auto" xil_pn:valueState="default"/>
     <property xil_pn:name="Use Synthesis Constraints File" xil_pn:value="true" xil_pn:valueState="default"/>
-    <property xil_pn:name="User Browsed Strategy Files" xil_pn:value="" xil_pn:valueState="default"/>
+    <property xil_pn:name="User Browsed Strategy Files" xil_pn:value="/opt/Xilinx/14.7/ISE_DS/ISE/data/default.xds" xil_pn:valueState="non-default"/>
     <property xil_pn:name="UserID Code (8 Digit Hexadecimal)" xil_pn:value="0xFFFFFFFF" xil_pn:valueState="default"/>
     <property xil_pn:name="VCCAUX Voltage Level spartan6" xil_pn:value="2.5V" xil_pn:valueState="default"/>
     <property xil_pn:name="VHDL Source Analysis Standard" xil_pn:value="VHDL-200X" xil_pn:valueState="non-default"/>

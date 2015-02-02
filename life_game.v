@@ -2,12 +2,12 @@
 
 module life_game(
 	input clock,
-	input run,
-	input [3:0] button,
-	input mouse_clock,
-	input mouse_button,
-	input [8:0] mouse_delta_x,
-	input [8:0] mouse_delta_y,
+	input enable,
+	input circlize,
+	input pointer_ready,
+	input [8:0] pointer_delta_x,
+	input [8:0] pointer_delta_y,
+	input pointer_select,
 	input [9:0] x_position,
 	input [8:0] y_position,
 	input inside_video,
@@ -18,12 +18,15 @@ module life_game(
 	parameter BLOCK_COUNT_X = 640 / BLOCK_SIZE;
 	parameter BLOCK_COUNT_Y = 480 / BLOCK_SIZE;
 
+	parameter COLOR_POINTER = 8'b110_110_10;
 	parameter COLOR_EMPTY = 8'b111_111_11;
+	parameter COLOR_BLACK = 8'b000_000_00;
 
-	reg [8:0] mouse_x = 320;
-	reg [8:0] mouse_y = 240;
-	wire mouse_x_index;
-	wire mouse_y_index;
+	reg [9:0] pointer_x = 320;
+	reg [8:0] pointer_y = 240;
+	wire [4:0] pointer_x_index;
+	wire [4:0] pointer_y_index;
+	wire pointer_select_on [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
 	reg map_0 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
 	reg map_1 [0:BLOCK_COUNT_X - 1] [0:BLOCK_COUNT_Y - 1];
 	reg map_index = 0;
@@ -33,6 +36,9 @@ module life_game(
 	wire [4:0] y_index;
 	wire block_current;
 	wire [7:0] color_life;
+	wire [7:0] color_empty;
+	wire [7:0] color_block;
+	wire [7:0] color_block_circlized;
 
 	initial begin
 		map_0[1][0] = 1;
@@ -42,16 +48,27 @@ module life_game(
 		map_0[2][2] = 1;
 	end
 
-	always @(posedge mouse_clock) begin
-		mouse_x <= mouse_x + mouse_delta_x;
-		mouse_y <= mouse_y + mouse_delta_y;
+	// FIXME: Should use system clock here.
+	always @(posedge clock) begin
+		if (pointer_ready) begin
+			if (pointer_delta_x[8]) begin
+				pointer_x <= pointer_x - pointer_delta_x[7:0];
+			end else begin
+				pointer_x <= pointer_x + pointer_delta_x[7:0];
+			end
+			if (pointer_delta_y[8]) begin
+				pointer_y <= pointer_y - pointer_delta_y[7:0];
+			end else begin
+				pointer_y <= pointer_y + pointer_delta_y[7:0];
+			end
+		end
 	end
 
-	assign mouse_x_index = mouse_x / 5'd20;
-	assign mouse_y_index = mouse_y / 5'd20;
+	assign pointer_x_index = pointer_x / BLOCK_SIZE;
+	assign pointer_y_index = pointer_y / BLOCK_SIZE;
 
 	always @(posedge clock) begin
-		if (run) begin
+		if (enable) begin
 			map_index <= ~map_index;
 		end
 	end
@@ -61,6 +78,7 @@ generate
 	for (i = 0; i < BLOCK_COUNT_X; i = i + 1) begin
 		for (j = 0; j < BLOCK_COUNT_Y; j = j + 1) begin
 
+	assign pointer_select_on[i][j] = i == pointer_x_index && j == pointer_y_index && pointer_select;
 	assign neighbor_count_0[i][j] = map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_0[i][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y] + map_0[(i + 1) % BLOCK_COUNT_X][(j - 1 + BLOCK_COUNT_Y) % BLOCK_COUNT_Y]
 			+ map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j] + map_0[(i + 1) % BLOCK_COUNT_X][j]
 			+ map_0[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y] + map_0[i][(j + 1) % BLOCK_COUNT_Y] + map_0[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y];
@@ -68,19 +86,19 @@ generate
 			+ map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][j] + map_1[(i + 1) % BLOCK_COUNT_X][j]
 			+ map_1[(i - 1 + BLOCK_COUNT_X) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y] + map_1[i][(j + 1) % BLOCK_COUNT_Y] + map_1[(i + 1) % BLOCK_COUNT_X][(j + 1) % BLOCK_COUNT_Y];
 	always @(posedge clock) begin
-		if (run) begin
-			if (map_index == 0) begin
-				if (map_0[i][j]) begin
-					map_1[i][j] <= mouse_button || neighbor_count_0[i][j] == 2 || neighbor_count_0[i][j] == 3;
-				end else begin
-					map_1[i][j] <= mouse_button || neighbor_count_0[i][j] == 3;
-				end
+		if (map_index == 0) begin
+			map_0[i][j] <= pointer_select_on[i][j] ^ map_0[i][j];
+			if (map_0[i][j]) begin
+				map_1[i][j] <= neighbor_count_0[i][j] == 2 | neighbor_count_0[i][j] == 3;
 			end else begin
-				if (map_1[i][j]) begin
-					map_0[i][j] <= mouse_button || neighbor_count_1[i][j] == 2 || neighbor_count_1[i][j] == 3;
-				end else begin
-					map_0[i][j] <= mouse_button || neighbor_count_1[i][j] == 3;
-				end
+				map_1[i][j] <= neighbor_count_0[i][j] == 3;
+			end
+		end else begin
+			map_1[i][j] <= pointer_select_on[i][j] ^ map_1[i][j];
+			if (map_1[i][j]) begin
+				map_0[i][j] <= neighbor_count_1[i][j] == 2 | neighbor_count_1[i][j] == 3;
+			end else begin
+				map_0[i][j] <= neighbor_count_1[i][j] == 3;
 			end
 		end
 //		map_0[i][j] <= 1;
@@ -91,14 +109,21 @@ generate
 	end
 endgenerate
 
-	assign x_index = x_position / 5'd20;
-	assign y_index = y_position / 5'd20;
+	assign x_index = x_position / BLOCK_SIZE;
+	assign y_index = y_position / BLOCK_SIZE;
 	assign block_current = map_index == 0 ? map_0[x_index][y_index] : map_1[x_index][y_index];
 	color_generator color_generator(x_index, y_index, color_life);
+	assign color_empty = x_index == pointer_x_index && y_index == pointer_y_index ? COLOR_POINTER : COLOR_EMPTY;
+	assign color_block = block_current ? color_life : color_empty;
+	color_circlizer #(BLOCK_SIZE) color_circlizer (x_position - x_index * BLOCK_SIZE, y_position - y_index * BLOCK_SIZE, color_block, color_empty, color_block_circlized);
 
 	always @(*) begin
 		if (inside_video) begin
-			color = block_current ? color_life : COLOR_EMPTY;
+			if (x_position <= BLOCK_SIZE * BLOCK_COUNT_X) begin
+				color = circlize ? color_block : color_block_circlized;
+			end else begin
+				color = COLOR_BLACK;
+			end
 		end else begin
 			color = 0;
 		end

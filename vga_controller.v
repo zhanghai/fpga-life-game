@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 
 module vga_controller(
-	input wire clock_25mhz,
-	input wire reset,
+	input clock_25mhz,
+	input reset,
 	output reg h_sync,
 	output reg v_sync,
 	output reg inside_video,

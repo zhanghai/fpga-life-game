@@ -11,7 +11,7 @@ module clock_divider_to_125ms(
 
 	always @(posedge clock_100mhz) begin
 		if (counter < COUNTER_MAX - 1) begin
-			counter <= counter + 1;
+			counter <= counter + 1'b1;
 		end else begin
 			counter <= 0;
 			clock_125ms <= ~clock_125ms;

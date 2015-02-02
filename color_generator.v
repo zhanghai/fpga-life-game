@@ -9,6 +9,7 @@ module color_generator(
 	wire [3:0] h;
 	wire [2:0] s;
 
+	// TODO: h = 2 * h for variance.
 	assign h = x_index * 12 / 32;
 	assign s = y_index / 6 + 4;
 	
